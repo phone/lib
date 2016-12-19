@@ -292,9 +292,11 @@ function extract {
 }
 
 function printpath {
-	for p in $(echo $PATH | sed 's/:/ /g'); do
-		echo $p;
-	done
+	echo $PATH | awk -F':' '{
+		for (i=1;i<NF;i++) {
+			print $i;
+		}
+	}'
 }
 
 setarch
