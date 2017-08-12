@@ -12,7 +12,7 @@
 [merge]
     tool = vimdiff
 [core]
-    editor = /usr/bin/vim
+    editor = vi
     excludesfile = ~/.global_gitignore
     whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [help]

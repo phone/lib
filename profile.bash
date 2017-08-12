@@ -61,7 +61,7 @@ function setarch {
 }
 
 function setprompt {
-	PS1='$(printf "%s" "${H}:`basename ${PWD}`$ ")'
+	PS1="\h:\W\$ "
 }
 
 function setpython {
@@ -105,13 +105,13 @@ function setlein {
 }
 
 function setbin {
-	pathappend $HOME/bin
+	pathprepend $HOME/bin
 }
 
 function setgo {	
-	export GOROOT="$HOME/src/g"
+	export GOPATH="$HOME"
 	goroots="
-		$GOROOT
+		$GOPATH
 		/usr/local/go
 	"
 	for goroot in $goroots; do
@@ -298,7 +298,6 @@ function printpath {
 }
 
 setarch
-setprompt
 setpython
 setprompt
 sethistory
