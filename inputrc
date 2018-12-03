@@ -1,9 +1,9 @@
 # Readline Input Modifications
-set editing-mode vi
+#set editing-mode vi
 set show-mode-in-prompt on
 set enable-bracketed-paste on
 set mark-symlinked-directories on
 set show-all-if-ambiguous on
-set visible-stats on
-set vi-cmd-mode-string (:)
-set vi-ins-mode-string (+)
+#set visible-stats on
+#set vi-cmd-mode-string (:)
+#set vi-ins-mode-string (+)
