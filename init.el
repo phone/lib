@@ -1,8 +1,16 @@
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(setq package-list '(exec-path-from-shell ggtags company clang-format))
+
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 (require 'ido)
 (setq ido-enable-flex-matching t)
@@ -21,14 +29,29 @@
 (setq-default indent-tabs-mode nil)
 
 (global-set-key (kbd "M-*") 'pop-tag-mark)
+(global-font-lock-mode 0)
 
 ;; (require 'magit)
 ;; (global-set-key (kbd "C-x g") 'magit-status)
+
+(add-hook 'after-init-hook 'global-company-mode)
 
 (require 'exec-path-from-shell)
 (exec-path-from-shell-copy-env "SSH_AGENT_PID")
 (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
 (exec-path-from-shell-copy-env "PATH")
+
+(require 'ggtags)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode 'python-mode)
+              (ggtags-mode 1))))
+
+(global-set-key [f2] 'clang-format-buffer)
+(define-key ggtags-mode-map [f3] 'ggtags-find-reference)
+(define-key ggtags-mode-map [f4] 'ggtags-find-file)
+(define-key ggtags-mode-map [f5] 'ggtags-update-tags)
+(define-key ggtags-mode-map [f6] 'ggtags-create-tags)
 
 (setq esp-tagsfile-base "tags")
 
@@ -117,10 +140,14 @@ it can be retrieved with \\[yank], or by another program."
 (when (display-graphic-p)
   (set-background-color "#FFFFEE"))
 
+(defun esp-ansi-term ()
+  (interactive)
+  (ansi-term "/bin/bash"))
+
 (defun esp-fresh-terminal ()
   (interactive)
   (select-frame (make-frame))
-  (ansi-term "/usr/local/bin/bash"))
+  (esp-ansi-term))
 
 ;; Display ido results vertically, rather than horizontally
 (setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
@@ -139,6 +166,7 @@ it can be retrieved with \\[yank], or by another program."
                                  (concat "term<" (esp-basename default-directory) ">") 't)))))
                       (buffer-list))))))
 (global-set-key (kbd "C-x t") 'esp/term-switcher)
+(global-set-key [f8] 'esp-ansi-term)
 (global-set-key [f9] 'esp-fresh-terminal)
 
 ;;
@@ -202,7 +230,7 @@ it can be retrieved with \\[yank], or by another program."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (exec-path-from-shell keychain-environment magit))))
+ '(package-selected-packages (quote (clang-format company ggtags exec-path-from-shell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
