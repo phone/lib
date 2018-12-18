@@ -137,9 +137,6 @@ it can be retrieved with \\[yank], or by another program."
     (message "%s" fn)
     fn))
 
-(when (display-graphic-p)
-  (set-background-color "#FFFFEE"))
-
 (defun esp-ansi-term ()
   (interactive)
   (ansi-term "/bin/bash"))
