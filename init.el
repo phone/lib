@@ -36,18 +36,45 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; (add-to-list 'load-path "/home/elliot/emacs-libvterm")
+;; (require 'vterm)
+
+(add-hook 'term-mode-hook
+          (lambda () (font-lock-mode 't))
+          )
+
+
+;; We have to require these or the variables for term-raw-map
+;; and text-mode-map are both null.
+(require 'term)
+(require 'text-mode)
+
+;; Toggle an ansi term to text mode for seach/editing. It seems we can
+;; just as easily toggle back. Bind to F2 in both term raw mode and
+;; text mode.
+(defun toggle-term-text-mode ()
+  (interactive)
+  (if (eq major-mode 'term-mode)
+      (progn
+        (text-mode)
+        (toggle-read-only))
+    (progn (term-mode) (term-char-mode))))
+(define-key term-raw-map [f2] 'toggle-term-text-mode)
+(define-key text-mode-map [f2] 'toggle-term-text-mode)
+
 (require 'exec-path-from-shell)
 (exec-path-from-shell-copy-env "SSH_AGENT_PID")
 (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
 (exec-path-from-shell-copy-env "PATH")
 
 (require 'ggtags)
+(require 'cc-mode)
 (add-hook 'c-mode-common-hook
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode 'python-mode)
               (ggtags-mode 1))))
 
-(global-set-key [f2] 'clang-format-buffer)
+(define-key c-mode-base-map [f2] 'clang-format-buffer)
 (define-key ggtags-mode-map [f3] 'ggtags-find-reference)
 (define-key ggtags-mode-map [f4] 'ggtags-find-file)
 (define-key ggtags-mode-map [f5] 'ggtags-update-tags)
@@ -219,15 +246,12 @@ it can be retrieved with \\[yank], or by another program."
       (goto-line esp-ido-find-file-line-number)
       (setq esp-ido-find-file-line-number nil))))
 
-(when (display-graphic-p)
-  (set-background-color "#FFFFEE"))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (clang-format company ggtags exec-path-from-shell))))
+ '(package-selected-packages '(clang-format company ggtags exec-path-from-shell)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
