@@ -1,0 +1,51 @@
+source /opt/local/share/vile/filters.rc
+setv $autocolor-hook HighlightFilterMsg
+setv $read-hook HighlightFilterMsg
+set autocolor=500
+set ai
+set ts=4
+set sw=4
+set notabinsert
+set noflash
+set nomultibeep
+set showmatch
+set showmode
+set ruler
+set visual-matches=reverse
+set undolimit=999
+set tagword
+set tagrelative
+set tags="tags ../tags ../../tags ../../../tags ../../../../tags"
+
+define-submode py ts=4
+define-submode py sw=4
+define-submode cpp ts=2
+define-submode cpp sw=2
+define-submode make tabinsert
+define-submode make ts=8
+define-submode make sw=8
+define-submode c    tabinsert
+define-submode c    ts=8
+define-submode c    sw=8
+define-submode sh   tabinsert
+define-submode sh   ts=8
+define-submode sh   sw=8
+
+bind-key split-current-window ^T        ; split into 'T'wo windows
+bind-key next-window ^N                 ; 'N'ext window
+bind-key previous-window ^P             ; 'P'revious window
+bind-key undo-changes-backward u
+bind-key redo-changes-forward U
+
+map zz z.
+map R r
+map Q q
+map g 1G
+map! jj  
+map! jk  
+map!  bdwi
+
+use-register g load-register "!git grep -n : `git rev-parse --show-toplevel`"
+use-register x load-register ":!chmod a+x %:e!"
+use-register c load-register ":%!clang-format"
+use-register b load-register ":%!black -l79 -"
