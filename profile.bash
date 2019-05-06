@@ -299,6 +299,11 @@ function printpath {
 	}'
 }
 
+function delmerged {
+	BRANCH=`[ ! -z "$1" ] && echo -n "$1" || echo -n "master"`
+	git branch --merged "$BRANCH" | grep -v "\* $BRANCH" | xargs -n 1 git branch -d
+}
+
 setarch
 setpython
 setprompt
