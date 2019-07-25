@@ -1,2 +1,3 @@
 [ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap
-exec i3
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+exec awesome
