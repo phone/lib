@@ -61,7 +61,7 @@ function setarch {
 }
 
 function setprompt {
-	PS1="\h:\W\$ "
+	PS1=": \h:\W; "
 }
 
 function setpython {
