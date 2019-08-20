@@ -153,7 +153,9 @@ function setplan9 {
 		export ffont="/usr/local/plan9/font/pelm/unicode.9.font"
 		export rffont="/mnt/font/Menlo-Regular/25a/font"
 		function _acme() {
-			acme -a -f $pfont,$rpfont -F $ffont,$rffont $*
+			NAMESPACE="$(9 mktemp -d)"
+			9 plumber
+			acme -a -f $ffont,$rffont -F $rpfont $*
 		}
 		_rc() {
 			PATH=.:$PLAN9/bin:$bin rc $*
