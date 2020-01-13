@@ -469,9 +469,6 @@ globalkeys = awful.util.table.join(
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
-              {description = "quit awesome", group = "awesome"}),
-
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
@@ -504,16 +501,16 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
 
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run {
-                    prompt       = "Run Lua code: ",
-                    textbox      = awful.screen.focused().mypromptbox.widget,
-                    exe_callback = awful.util.eval,
-                    history_path = awful.util.get_cache_dir() .. "/history_eval"
-                  }
-              end,
-              {description = "lua execute prompt", group = "awesome"}),
+    -- awful.key({ modkey }, "x",
+    --           function ()
+    --               awful.prompt.run {
+    --                 prompt       = "Run Lua code: ",
+    --                 textbox      = awful.screen.focused().mypromptbox.widget,
+    --                 exe_callback = awful.util.eval,
+    --                 history_path = awful.util.get_cache_dir() .. "/history_eval"
+    --               }
+    --           end,
+    --           {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     --- awful.key({ modkey }, "p", function() menubar.show() end,
     ---           {description = "show the menubar", group = "launcher"}),
@@ -536,8 +533,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "Escape", function () awful.util.spawn("sudo -n /sbin/poweroff") end),
 
     --Misc. Shortcuts
-    awful.key({ modkey, "Shift" }, "n",      function () awful.util.spawn("nemo --no-desktop") end),
-    awful.key({ modkey, "Shift" }, "u",      function () awful.util.spawn("sudo pm-suspend") end),
+    awful.key({ modkey,  "Shift"}, "n",      function () awful.util.spawn("caja") end),
+    awful.key({ modkey,  "Shift"}, "u",      function () awful.util.spawn("i3lock -c000000 -i /home/elliot/.config/awesome/lockscreen.png && sudo pm-suspend") end),
     awful.key({ modkey, "Shift", "Control" }, "k",      function () awful.util.spawn("xkill") end),
 
     awful.key({ modkey, "Control" }, "l",      function ()
@@ -563,6 +560,8 @@ clientkeys = awful.util.table.join(
         end,
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+              {description = "close", group = "client"}),
+    awful.key({ modkey, "Shift"   }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),

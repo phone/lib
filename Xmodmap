@@ -2,7 +2,13 @@
 !keycode 0x42 = Control_L
 !add Control = Control_L
 
+! Makes Esc -> Multi, Caps -> Escape, Windows -> SuperL
 clear Lock
 clear Mod4
-keycode 66 = Super_L
-keycode 133 = Multi_key
+keycode 9 = Multi_key
+keycode 133 = Super_L
+keycode 66 = Escape
+
+! Makes CapsLock -> Super/Mod4, Windows key -> MultiKey
+! keycode 66 = Super_L
+! keycode 133 = Multi_key
